@@ -24,11 +24,11 @@ class AuthController extends Controller
         //asign a user role for the new registred 
         $user->syncRoles(['user']);
 
-        $token=$user->createToken('authToken');
-        return response()->json([
-            'access_toke'=>$token,
-            'token_type'=>'Bearer'
-        ]);
+        // $token=$user->createToken('authToken');
+        // return response()->json([
+        //     'access_toke'=>$token,
+        //     'token_type'=>'Bearer'
+        // ]);
     }
 
     public function login(Request $request){

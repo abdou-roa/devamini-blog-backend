@@ -6,6 +6,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -28,6 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
+    
     //users management routes
     Route::get('/users', [UserController::class, 'listUsers']);
     Route::delete('/delete/user/{id}', [UserController::class, 'DeleteUser']);
@@ -46,9 +48,13 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/add/tag', [TagController::class, 'AddTag']);
     Route::put('/update/tag/{id}', [TagController::class, 'UpdateTag']);
     Route::delete('/delete/tag/{id}', [TagController::class, 'DeleteTag']);
+    //roles management routes
+    Route::get('/roles', [RolesController::class, 'listRoles']);
 });
 
 Route::get('/posts', [PostController::class, 'ListAllposts']);
+Route::get('/post/{id}', [PostController::class, 'GetPostById']);
 Route::get('/user/{id}/posts', [UserController::class, 'ListUserPosts']);
 Route::get('/categories', [CategoryController::class, 'ListCategories']);
-Route::get('/posts/tag/{id}', [TagController::class, 'ListTagPosts']);
+Route::get('/posts/tag/{id}', [TagController::class,'ListTagPosts']);
+Route::get('/currentUser', [UserController::class,'currentUser']);

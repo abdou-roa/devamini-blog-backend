@@ -21,6 +21,12 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
+    //get post by id
+    public function GetPostById($id){
+        $post = Post::find($id);
+        return $post;
+    }
+
     //creating a new post
     public function AddPost(Request $request){
 
@@ -31,10 +37,12 @@ class PostController extends Controller
             'category_id' => 'required',
         ]);
 
+        $image_path = $request->file('post_image')->store('image', 'public');
+
         $createdPost = new Post();
         $createdPost->post_title = $validatedPostData['post_title'];
         $createdPost->post_body = $validatedPostData['post_body'];
-        $createdPost->post_image = $validatedPostData['post_image'];
+        $createdPost->post_image = $image_path;
         $createdPost->category_id = $validatedPostData['category_id'];
         $createdPost->user_id = $request->user()->id;
         $createdPost->save();
@@ -80,22 +88,21 @@ class PostController extends Controller
     }
 
     public function UpdatePost(Request $request, $id){
-
-        $post = Post::findOrfail($id);
-
+    
+        $int_id = (int) $id;
+        $post = Post::find($int_id);
         $validatedPostData = $request->validate([
             'post_title' => 'required',
             'post_body' => 'required',
             'post_image' => 'required',
             'category_id' => 'required',
         ]);
-
         $post->post_title = $validatedPostData['post_title'];
         $post->post_body = $validatedPostData['post_body'];
         $post->post_image = $validatedPostData['post_image'];
         $post->category_id = $validatedPostData['category_id'];
         $post->user_id = $request->user()->id;
-        
+
         $post->save();
 
         if($request->has('tags')){
