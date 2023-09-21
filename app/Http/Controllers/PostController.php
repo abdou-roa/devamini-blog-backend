@@ -91,16 +91,16 @@ class PostController extends Controller
     
         $int_id = (int) $id;
         $post = Post::find($int_id);
-        $validatedPostData = $request->validate([
-            'post_title' => 'required',
-            'post_body' => 'required',
-            'post_image' => 'required',
-            'category_id' => 'required',
-        ]);
-        $post->post_title = $validatedPostData['post_title'];
-        $post->post_body = $validatedPostData['post_body'];
-        $post->post_image = $validatedPostData['post_image'];
-        $post->category_id = $validatedPostData['category_id'];
+        // $validatedPostData = $request->validate([
+        //     'post_title' => 'required',
+        //     'post_body' => 'required',
+        //     'post_image' => 'required',
+        //     'category_id' => 'required',
+        // ]);
+        $post->post_title = $request['post_title'];
+        $post->post_body = $request['post_body'];
+        $post->post_image = $request['post_image'];
+        $post->category_id = $request['category_id'];
         $post->user_id = $request->user()->id;
 
         $post->save();
