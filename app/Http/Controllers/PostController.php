@@ -99,9 +99,9 @@ class PostController extends Controller
         // ]);
         $post->post_title = $request['post_title'];
         $post->post_body = $request['post_body'];
-        $post->post_image = $request['post_image'];
         $post->category_id = $request['category_id'];
         $post->user_id = $request->user()->id;
+        //$post->post_image = $request['post_image'];
 
         $post->save();
 
